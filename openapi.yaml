@@ -58,14 +58,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      allOf:
-                      - $ref: "#/components/schemas/Person"
-                      - $ref: "#/components/schemas/Token"
+                $ref: "#/components/schemas/Person"
         "400":
           description: "Bad Request"
           content:
@@ -311,12 +304,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: "#/components/schemas/Person"
+               $ref: "#/components/schemas/Person"
         '401':
           description: "unauthorized"
           content:
@@ -402,12 +390,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: "#/components/schemas/Person"
+               $ref: "#/components/schemas/Person"
         '401':
           description: "unauthorized"
           content:
@@ -1556,9 +1539,6 @@ components:
         first_name:
           type: string
           example: "Петр"
-        last_name:
-          type: string
-          example: "Петрович"
         birth_date:
           type: number
           example: 1559751301818
@@ -1578,10 +1558,7 @@ components:
         country_id:
           type: number
           example: 33
-        messages_permission:
-          type: string
-          example: "ALL"
-          description: "Разрешение на получение сообщений: ALL - от всех пользователей (кроме заблокированных), FRIENDS - только от друзей"
+         
     Person:
       type: object
       description: "Пользователь соц. сети"
@@ -1592,9 +1569,6 @@ components:
         first_name:
           type: string
           example: "Петр"
-        last_name:
-          type: string
-          example: "Петрович"
         reg_date:
           type: number
           example: 1559751301818
@@ -1617,38 +1591,12 @@ components:
           $ref: "#/components/schemas/City"
         country:
           $ref: "#/components/schemas/Country"
-        messages_permission:
-          type: string
-          example: "ALL"
-          description: "Разрешение на получение сообщений: ALL - от всех пользователей (кроме заблокированных), FRIENDS - только от друзей"
-        last_online_time:
-          type: number
-          example: 1559751301818
+        is_can_write:
+          type: boolean
+          example: false
         is_blocked:
           type: boolean
           example: false
-    BlockHistory:
-      type: object
-      description: "История блокировок пользователей за пост / комментарий"
-      properties:
-        id:
-          type: number
-          example: 1
-        time:
-          type: number
-          example: 1559751301818
-        person_id:
-          type: number
-          example: 1
-        post_id:
-          type: number
-          example: 1
-        comment_id:
-          type: number
-          example: 1
-        action:
-          type: string
-          description: "Тип действия: BLOCK (блокировка) или UNBLOCK (разблокировка)"
     User:
       type: object
       description: "Модераторы и администраторы"
@@ -1663,137 +1611,7 @@ components:
         type:
           type: string
           description: "Тип пользователя: MODERATOR, ADMIN (может управлять другими админами и модераторами)"
-    Friendship:
-      type: object
-      description: "Дружба"
-      properties:
-        id:
-          type: number
-          example: 1
-        status_id:
-          type: number
-          example: 13
-          description: "Статус связи (см. ниже)"
-        src_person_id:
-          type: number
-          example: 1
-        dst_person_id:
-          type: number
-          example: 2
-    FriendshipStatus:
-      type: object
-      description: "Статус дружбы"
-      properties:
-        id:
-          type: number
-          example: 13
-        time:
-          type: number
-          example: 1559751301818
-          description: "Дата и время установки данного статуса"
-        name:
-          type: string
-        code:
-          $ref: "#/components/schemas/FriendshipStatusCode"
-    FriendshipStatusCode:
-      description: "Код статуса статуса дружбы"
-      type: string
-      enum: 
-        - FRIEND
-        - REQUEST
-        - BLOCKED
-        - DECLINED
-        - SUBSCRIBED
-    Message:
-      type: object
-      description: "Личное сообщение"
-      properties:
-        id:
-          type: number
-          example: 12
-        time:
-          type: number
-          description: "Дата и время отправки"
-          format: date-time
-          example: 1559751301818
-        author_id:
-          type: number
-          example: 1
-        recipient_id:
-          type: number
-          example: 1
-        message_text:
-          type: string
-        read_status:
-          $ref: "#/components/schemas/ReadStatus"
-    MeasageSendRequestBody:
-      type: object
-      description: "Личное сообщение"
-      properties:
-        message_text:
-          type: string
-    LongpollServerResponseBody:
-      type: object
-      properties:
-        key:
-          type: string
-          example: "0d8fd9459427ab0d481b9deddae3d5350e25f5ab"
-        server:
-          type: string
-          description: "Url для подключения к longpoll серверу"
-        ts:
-          type: number
-          example: 1614211035
-
-    LongpollHistoryRequestBody:
-      type: object
-      properties:
-        ts:
-          type: number
-          example: 1614211035
-          description: "Последнее значение параметра ts, полученное от Long Poll сервера"
-        pts:
-          type: number
-          description: "Последнее значение параметра new_pts, полученное от Long Poll сервера, используется для получения действий, которые хранятся всегда."
-        preview_length:
-          type: number
-          description: "Количество символов, по которому нужно обрезать сообщение. Укажите 0, если Вы не хотите обрезать сообщение. (по умолчанию сообщения не обрезаются)."
-        onlines:
-          type: number
-          description: "1 — возвращать в числе прочих события 8 и 9 (пользователь стал онлайн/оффлайн). Учитывается только при использовании ts."
-        events_limit:
-          type: number
-          description: "Лимит по количеству всех событий в истории. Обратите внимание, параметры events_limit и msgs_limit применяются совместно. Число результатов в ответе ограничивается первым достигнутым лимитом."
-        msgs_limit:
-          type: number
-          description: "Kимит по количеству событий с сообщениями в истории. Обратите внимание, параметры events_limit и msgs_limit применяются совместно. Число результатов в ответе ограничивается первым достигнутым лимитом."
-        max_msg_id:
-          type: number
-          description: "Максимальный идентификатор сообщения среди уже имеющихся в локальной копии."
-    LongpollHistoryResponse:
-      type: object
-      properties:
-        messages:
-          type: object
-          properties:
-            count:
-              type: number
-              example: 1
-            messages:
-              type: array
-              items:
-                $ref: '#/components/schemas/Message'
-        profiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/Person'
-            
-    ReadStatus:
-      type: string
-      description: "Статус прочтения"
-      enum:
-        - SENT
-        - READ
+  
     PostRequestBody:
       type: object
       properties:
