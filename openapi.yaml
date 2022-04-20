@@ -6,7 +6,7 @@ info:
   title: API schema
 
 security:
-  - bearerAuth: []  
+  - bearerAuth: [ ]
 
 tags:
   - name: auth
@@ -15,8 +15,8 @@ tags:
     description: Работа с аккаунтом<br>Работа с паролями/идентификаторами пользователя
   - name: profile
     description: Работа с профилем<br>Работа с публичной информацией пользователя
-  - name: posts
-    description: Работа с публикациями
+  - name: reviews
+    description: Работа с отзывами
   - name: likes
     description: Работа с \"Лайками\"
   - name: feeds
@@ -74,30 +74,24 @@ paths:
       description: "Выполнить выход"
       summary: "Выход"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       responses:
         "200":
           description: "Успешная выход"
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: "ok"
+                properties:
+                  message:
+                    type: string
+                    example: "ok"
         '400':
           description: "Bad Request"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    
+
   
   /api/v1/account/register:
     post:
@@ -142,25 +136,22 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: "ok"
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "ok"
         '400':
           description: "Bad Request"
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      
+
   /api/v1/account/password/recovery:
     put:
-      tags: 
+      tags:
         - account
       description: "Восстановить пароль по email.<br>Высылает ссылку для восстановления на почтовый ящик."
       summary: "Восстановление пароля"
@@ -180,16 +171,10 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: "ok"
+                properties:
+                  message:
+                    type: string
+                    example: "ok"
         '400':
           description: "Bad Request"
           content:
@@ -199,12 +184,12 @@ paths:
 
   /api/v1/account/password/set:
     put:
-      tags: 
+      tags:
         - account
       description: "Изменить пароль."
       summary: "Смена пароля"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       requestBody:
         content:
           application/json:
@@ -225,16 +210,10 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: "ok"
+                properties:
+                  message:
+                    type: string
+                    example: "ok"
         '400':
           description: "Bad Request"
           content:
@@ -244,12 +223,12 @@ paths:
 
   /api/v1/account/notifications:
     put:
-      tags: 
+      tags:
         - account
       description: "Редактирование настроек оповещения"
       summary: "Редактирование настроек оповещения"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       requestBody:
         content:
           application/json:
@@ -268,16 +247,10 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: "ok"
+                properties:
+                  message:
+                    type: string
+                    example: "ok"
         '400':
           description: "Bad Request"
           content:
@@ -297,14 +270,14 @@ paths:
         - profile
       description: "Получить текущего пользователя"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       responses:
         '200':
           description: "Успешное получение текущего пользователя"
           content:
             application/json:
               schema:
-               $ref: "#/components/schemas/Person"
+                $ref: "#/components/schemas/Person"
         '401':
           description: "unauthorized"
           content:
@@ -316,7 +289,7 @@ paths:
         - profile
       description: "Редактирование текущего пользователя"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       requestBody:
         content:
           application/json:
@@ -328,12 +301,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: "#/components/schemas/Person"
+                $ref: "#/components/schemas/Person"
         '401':
           description: "unauthorized"
           content:
@@ -345,23 +313,18 @@ paths:
         - profile
       description: "Удаление текущего пользователя"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       responses:
         '200':
           description: "Успешное удаление текущего пользователя"
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      properties:
-                        message:
-                          type: string
-                          description: "Сообщение о успехе"
-                          example: "ok"
+                properties:
+                  message:
+                    type: string
+                    description: "Сообщение о успехе"
+                    example: "ok"
         '401':
           description: "unauthorized"
           content:
@@ -375,30 +338,23 @@ paths:
         - profile
       description: "Получить пользователя по id"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: id
-        in: path
-        description: "ID пользователя"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID пользователя"
+          required: true
+          schema:
+            type: number
+            example: 1
       responses:
         '200':
           description: "Успешное получение пользователя"
           content:
             application/json:
               schema:
-               $ref: "#/components/schemas/Person"
-        '401':
-          description: "unauthorized"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  
- 
+                $ref: "#/components/schemas/Person"
+
   /api/v1/users/block/{id}:
     put:
       tags:
@@ -406,31 +362,26 @@ paths:
       description: "Блокировка пользователя по id"
       summary: "Блокировка пользователя по id"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: id
-        in: path
-        description: "ID пользователя"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID пользователя"
+          required: true
+          schema:
+            type: number
+            example: 1
       responses:
         '200':
           description: "Успешная блокировка пользователя"
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: "ok"
+                properties:
+                  message:
+                    type: string
+                    description: "Сообщение о успехе"
+                    example: "ok"
         "400":
           description: "Bad Request"
           content:
@@ -449,31 +400,27 @@ paths:
       description: "Разблокировать пользователя по id"
       summary: "Разблокировать пользователя по id"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: id
-        in: path
-        description: "ID пользователя"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID пользователя"
+          required: true
+          schema:
+            type: number
+            example: 1
       responses:
         '200':
           description: "Успешное снятие блокировки с пользователя"
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: "ok"
+
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "ok"
         "400":
           description: "Bad Request"
           content:
@@ -487,38 +434,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
   
-  /api/v1/post/:
+  /api/v1/reviews/:
     get:
       tags:
-        - posts
-      description: "Поиск публикации"
-      summary: "Поиск публикации"
+        - reviews
+      description: "Поиск последних отзывов"
+      summary: "Поиск последних отзывов"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: text
-        in: query
-        description: "Текст публикации"
-        required: true
-        schema:
-          type: string
-          example: "Бла бла"
-      - name: date_from
-        in: query
-        description: "Дата публикации ОТ"
-        required: false
-        schema:
-          type: number
-          example: 1559751301818
-      - name: date_to
-        in: query
-        description: "Дата публикации ДО"
-        required: false
-        schema:
-          type: number
-          example: 1559751301818
-      - $ref: '#/components/parameters/offsetParam'
-      - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         '200':
           description: "Успешное получение публикации"
@@ -526,13 +452,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/ListResponse"
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Post'
+                  - $ref: "#/components/schemas/ListResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Post'
         "400":
           description: "Bad Request"
           content:
@@ -545,34 +471,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/post/{id}:
+  /api/v1/reviews/{id}:
     get:
       tags:
-        - posts
-      description: "Получение публикации по ID"
-      summary: "Получение публикации по ID"
+        - reviews
+      description: "Получение отзыва по ID"
+      summary: "Получение отзыва по ID"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID отзыва"
+          required: true
+          schema:
+            type: number
+            example: 1
       responses:
         '200':
-          description: "Успешное получение публикации"
+          description: "Успешное получение отзыва"
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/Review'
         "400":
           description: "Bad Request"
           content:
@@ -587,26 +508,19 @@ paths:
                 $ref: '#/components/schemas/Error'
     put:
       tags:
-        - posts
-      description: "Редактирование публикации"
-      summary: "Редактирование публикации по ID"
+        - reviews
+      description: "Редактирование отзыва"
+      summary: "Редактирование отзыва по ID"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
-      - name: publish_date
-        in: query
-        description: "Отложить до даты определенной даты"
-        required: false
-        schema:
-          type: number
-          example: 1559751301818
+        - name: id
+          in: path
+          description: "ID отзыва"
+          required: true
+          schema:
+            type: number
+            example: 1
       requestBody:
         content:
           application/json:
@@ -614,16 +528,11 @@ paths:
               $ref: '#/components/schemas/PostRequestBody'
       responses:
         '200':
-          description: "Успешное редактирование публикации"
+          description: "Успешное редактирование отзыва"
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/Post'
+                $ref: '#/components/schemas/Post'
         "400":
           description: "Bad Request"
           content:
@@ -638,35 +547,31 @@ paths:
                 $ref: '#/components/schemas/Error'
     delete:
       tags:
-        - posts
+        - reviews
       description: "Удаление публикации"
       summary: "Удаление публикации по ID"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
       responses:
         '200':
           description: "Успешное удаление публикации"
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                          description: "ID удаленной публикации"
+
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: "ID удаленной публикации"
         "400":
           description: "Bad Request"
           content:
@@ -679,34 +584,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/post/{id}/recover:
+  /api/v1/reviews/{id}/recover:
     put:
       tags:
-        - posts
+        - reviews
       description: "Восстановление публикации по ID"
       summary: "Восстановление публикации по ID"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
       responses:
         '200':
           description: "Успешное восстановление публикации"
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/Post'
+
+                $ref: '#/components/schemas/Post'
         "400":
           description: "Bad Request"
           content:
@@ -719,22 +620,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/post/{id}/comments:
+  /api/v1/reviews/{id}/comments:
     get:
       tags:
-        - posts
-      description: "Получение комментариев на публикации"
-      summary: "Получение комментариев на публикации"
+        - reviews
+      description: "Получение комментариев у оператора"
+      summary: "Получение комментариев у оператора"
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
-      - $ref: '#/components/parameters/offsetParam'
-      - $ref: '#/components/parameters/limitParam'
+        - name: id
+          in: path
+          description: "ID оператора"
+          required: true
+          schema:
+            type: number
+            example: 1
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         '200':
           description: "Успешное получение комментариев"
@@ -742,13 +643,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/ListResponse"
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Comment'
+                  - $ref: "#/components/schemas/ListResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Comment'
         "400":
           description: "Bad Request"
           content:
@@ -763,17 +664,17 @@ paths:
                 $ref: '#/components/schemas/Error'
     post:
       tags:
-        - posts
+        - reviews
       description: "Создание комментария к публикации"
       summary: "Создание комментария к публикации"
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
       requestBody:
         content:
           application/json:
@@ -786,11 +687,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: "#/components/schemas/Comment"
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/Comment"
         "400":
           description: "Bad Request"
           content:
@@ -803,27 +704,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/post/{id}/comments/{comment_id}:
+  /api/v1/reviews/{id}/comments/{comment_id}:
     put:
       tags:
-        - posts
+        - reviews
       description: "Редактирование комментария к публикации"
       summary: "Редактирование комментария к публикации"
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
-      - name: comment_id
-        in: path
-        description: "ID комментария публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
+        - name: comment_id
+          in: path
+          description: "ID комментария публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
       requestBody:
         content:
           application/json:
@@ -836,11 +737,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: "#/components/schemas/Comment"
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/Comment"
         "400":
           description: "Bad Request"
           content:
@@ -855,24 +756,24 @@ paths:
                 $ref: '#/components/schemas/Error'
     delete:
       tags:
-        - posts
+        - reviews
       description: "Удаление комментария к публикации"
       summary: "Удаление комментария к публикации"
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
-      - name: comment_id
-        in: path
-        description: "ID комментария публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
+        - name: comment_id
+          in: path
+          description: "ID комментария публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
       responses:
         '200':
           description: "Успешное создание комментария"
@@ -880,16 +781,16 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        id:
-                          type: number
-                          description: "ID удаленной публикации"
-                          example: 13
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                            description: "ID удаленной публикации"
+                            example: 13
         "400":
           description: "Bad Request"
           content:
@@ -902,27 +803,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/v1/post/{id}/comments/{comment_id}/recover:
+  /api/v1/reviews/{id}/comments/{comment_id}/recover:
     put:
       tags:
-        - posts
+        - reviews
       description: "Восстановление комментария"
       summary: "Восстановление комментария"
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
-      - name: comment_id
-        in: path
-        description: "ID комментария публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
+        - name: id
+          in: path
+          description: "ID публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
+        - name: comment_id
+          in: path
+          description: "ID комментария публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
       responses:
         '200':
           description: "Успешное восстановление комментария"
@@ -930,13 +831,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Comment'
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Comment'
         "400":
           description: "Bad Request"
           content:
@@ -949,70 +850,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  
-  /api/v1/post/{id}/report:
+  /api/v1/reviews/{id}/comments/{comment_id}/report:
     post:
       tags:
-        - posts
-      description: "Подать жалобу на публикацию"
-      summary: "Подать жалобу на публикацию"
-      parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
-      responses:
-        '200':
-          description: "Успешное создание жалобы на публикацию"
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: "ok"
-        "400":
-          description: "Bad Request"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-        '401':
-          description: "unauthorized"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-  /api/v1/post/{id}/comments/{comment_id}/report:
-    post:
-      tags:
-        - posts
+        - reviews
       description: "Подать жалобу на комментарий к публикации"
       summary: "Подать жалобу на комментарий к публикации"
       parameters:
-      - name: id
-        in: path
-        description: "ID публикации"
-        required: true
-        schema:
-          type: number
-          example: 1
-      - name: comment_id
-        in: path
-        description: "ID комментария"
-        required: true
-        schema:
-          type: number
-          example: 13
+        - name: id
+          in: path
+          description: "ID публикации"
+          required: true
+          schema:
+            type: number
+            example: 1
+        - name: comment_id
+          in: path
+          description: "ID комментария"
+          required: true
+          schema:
+            type: number
+            example: 13
       responses:
         '200':
           description: "Успешное создание жалобы на комментарий"
@@ -1020,15 +878,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        message:
-                          type: string
-                          example: "ok"
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          message:
+                            type: string
+                            example: "ok"
         "400":
           description: "Bad Request"
           content:
@@ -1041,7 +899,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-                
+
   /api/v1/liked:
     get:
       tags:
@@ -1049,8 +907,8 @@ paths:
       description: "Был ли поставлен лайк пользователем"
       summary: "Был ли поставлен лайк пользователем"
       security:
-        - bearerAuth: []
-      parameters: 
+        - bearerAuth: [ ]
+      parameters:
         - name: user_id
           in: query
           required: false
@@ -1077,15 +935,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        likes:
-                          type: boolean
-                          example: false
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          likes:
+                            type: boolean
+                            example: false
 
         "400":
           description: "Bad Request"
@@ -1106,8 +964,8 @@ paths:
       description: "Получить список пользователей оставивших лайк"
       summary: "Получить список лайков"
       security:
-        - bearerAuth: []
-      parameters: 
+        - bearerAuth: [ ]
+      parameters:
         - name: item_id
           in: query
           required: true
@@ -1127,11 +985,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: "#/components/schemas/LikeUsersList"
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/LikeUsersList"
 
         "400":
           description: "Bad Request"
@@ -1151,7 +1009,7 @@ paths:
       description: "Поставить лайк"
       summary: "Поставить лайк"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       requestBody:
         content:
           application/json:
@@ -1164,11 +1022,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: "#/components/schemas/LikeUsersList"
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/LikeUsersList"
         "400":
           description: "Bad Request"
           content:
@@ -1187,8 +1045,8 @@ paths:
       description: "Убрать лайк"
       summary: "Убрать лайк"
       security:
-        - bearerAuth: []
-      parameters: 
+        - bearerAuth: [ ]
+      parameters:
         - name: item_id
           in: query
           required: true
@@ -1208,14 +1066,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        likes:
-                          $ref: "#/components/schemas/LikesCount"
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          likes:
+                            $ref: "#/components/schemas/LikesCount"
         "400":
           description: "Bad Request"
           content:
@@ -1251,13 +1109,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/ListResponse"
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Post'
+                  - $ref: "#/components/schemas/ListResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Post'
         "400":
           description: "Bad Request"
           content:
@@ -1278,7 +1136,7 @@ paths:
       description: "Получить список уведомлений для текущего пользователя"
       summary: "Получить список уведомлений"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
         - $ref: '#/components/parameters/offsetParam'
         - $ref: '#/components/parameters/limitParam'
@@ -1289,13 +1147,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/ListResponse"
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/NotificationBase'
+                  - $ref: "#/components/schemas/ListResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/NotificationBase'
         "400":
           description: "Bad Request"
           content:
@@ -1308,29 +1166,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    put:  
+    put:
       tags:
         - notifications
       description: "Отметить уведомление как \"прочитанное\""
       summary: "Прочитать уведомление"
       security:
-        - bearerAuth: []
+        - bearerAuth: [ ]
       parameters:
-      - name: id
-        in: query
-        description: "ID уведомления"
-        required: false
-        schema:
-          type: number
-          example: 1
-      - name: all
-        in: query
-        description: "Пометка что прочесть все уведомления"
-        required: false
-        schema:
-          type: boolean
-          example: true
-        
+        - name: id
+          in: query
+          description: "ID уведомления"
+          required: false
+          schema:
+            type: number
+            example: 1
+        - name: all
+          in: query
+          description: "Пометка что прочесть все уведомления"
+          required: false
+          schema:
+            type: boolean
+            example: true
+
       responses:
         "200":
           description: "Успешное получение списка уведомлений"
@@ -1338,13 +1196,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/ListResponse"
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/NotificationBase'
+                  - $ref: "#/components/schemas/ListResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/NotificationBase'
         "400":
           description: "Bad Request"
           content:
@@ -1364,8 +1222,8 @@ paths:
         - storage
       description: "Загрузка файла в хранилище"
       security:
-        - bearerAuth: []
-     
+        - bearerAuth: [ ]
+
       responses:
         '200':
           description: "Успешная закгрузка файла"
@@ -1373,11 +1231,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/Response"
-                - type: object
-                  properties:
-                    data:
-                      $ref: '#/components/schemas/FileUploadResponse'
+                  - $ref: "#/components/schemas/Response"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/FileUploadResponse'
   /api/v1/platform/languages:
     get:
       tags:
@@ -1385,14 +1243,14 @@ paths:
       description: "Получение языков платформы"
       summary: "Получение языков"
       parameters:
-      - name: language
-        in: query
-        description: "Строка для поиска по языкам"
-        required: false
-        schema:
-          type: string
-      - $ref: '#/components/parameters/offsetParam'
-      - $ref: '#/components/parameters/limitParam'
+        - name: language
+          in: query
+          description: "Строка для поиска по языкам"
+          required: false
+          schema:
+            type: string
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         "200":
           description: "Успешное получение языков"
@@ -1400,13 +1258,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/ListResponse"
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/PlatfomLanguage'
+                  - $ref: "#/components/schemas/ListResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PlatfomLanguage'
   /api/v1/platform/countries:
     get:
       tags:
@@ -1414,14 +1272,14 @@ paths:
       description: "Получение стран платформы"
       summary: "Получение стран"
       parameters:
-      - name: country
-        in: query
-        description: "Строка для поиска по странам"
-        required: false
-        schema:
-          type: string
-      - $ref: '#/components/parameters/offsetParam'
-      - $ref: '#/components/parameters/limitParam'
+        - name: country
+          in: query
+          description: "Строка для поиска по странам"
+          required: false
+          schema:
+            type: string
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         "200":
           description: "Успешное получение стран"
@@ -1429,13 +1287,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/ListResponse"
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Country'
+                  - $ref: "#/components/schemas/ListResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Country'
   /api/v1/platform/cities:
     get:
       tags:
@@ -1443,20 +1301,20 @@ paths:
       description: "Получение городов платформы"
       summary: "Получение городов"
       parameters:
-      - name: countryId
-        in: query
-        description: "ID страны"
-        required: true
-        schema:
-          type: number
-      - name: city
-        in: query
-        description: "Строка для поиска по городам"
-        required: false
-        schema:
-          type: string
-      - $ref: '#/components/parameters/offsetParam'
-      - $ref: '#/components/parameters/limitParam'
+        - name: countryId
+          in: query
+          description: "ID страны"
+          required: true
+          schema:
+            type: number
+        - name: city
+          in: query
+          description: "Строка для поиска по городам"
+          required: false
+          schema:
+            type: string
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
       responses:
         "200":
           description: "Успешное получение городов"
@@ -1464,20 +1322,21 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: "#/components/schemas/ListResponse"
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/City'
+                  - $ref: "#/components/schemas/ListResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/City'
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: JWT  
+      bearerFormat: JWT
   schemas:
+
     Error:
       type: object
       properties:
@@ -1504,33 +1363,64 @@ components:
             - "Redirect URI mismatch"
             - "Invalid authorization code: CODE"
             - "Bad credentials"
-    Response:
-      type: object
-      properties:
-        error: 
-          type: string
-          description: "Сообщение, в случае ошибки здесь будет причина"
-        timestamp:
-          type: number
-          example: 1559751301818
+
     ListResponse:
       allOf:
-      - $ref: "#/components/schemas/Response"
-      - type: object
-        properties:
-          total:
-            type: integer
-            description: "Количество элементов в списке"
-            format: int64
-          offset:
-            type: integer
-            description: "Отступ от начала списка"
-            format: int64
-          perPage:
-            type: integer
-            description: "Количество элементов на страницу"
-            format: int64
-            default: 20
+        - type: object
+          properties:
+            total:
+              type: integer
+              description: "Количество элементов в списке"
+              format: int64
+            offset:
+              type: integer
+              description: "Отступ от начала списка"
+              format: int64
+            perPage:
+              type: integer
+              description: "Количество элементов на страницу"
+              format: int64
+              default: 20
+
+
+    Review:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        time:
+          type: number
+          example: 1559751301818
+          description: "дата и время публикации"
+        author:
+          $ref: "#/components/schemas/Person"
+        title:
+          type: string
+          description: "Заголовок"
+        operator_id:
+          type: number
+          example: 1
+          description: "ID Оператора"
+        review_text:
+          type: string
+          description: "HTML-текст поста"
+        is_blocked:
+          type: boolean
+          description: "Отметка о том, что отзыв заблокирован"
+          example: false
+        is_deleted:
+          type: boolean
+          description: "Отметка о том, что отзыв удалён"
+          example: false
+        likes:
+          type: number
+          description: "Количество лайков"
+          example: 23
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
 
     PersonEditBody:
       type: object
@@ -1558,7 +1448,7 @@ components:
         country_id:
           type: number
           example: 33
-         
+
     Person:
       type: object
       description: "Пользователь соц. сети"
@@ -1611,14 +1501,14 @@ components:
         type:
           type: string
           description: "Тип пользователя: MODERATOR, ADMIN (может управлять другими админами и модераторами)"
-  
+
     PostRequestBody:
       type: object
       properties:
         title:
           type: string
           description: "Заголовок"
-        post_text:
+        review_text:
           type: string
           description: "HTML-текст поста"
     Post:
@@ -1633,7 +1523,7 @@ components:
           description: "дата и время публикации"
         author:
           $ref: "#/components/schemas/Person"
-            
+
         title:
           type: string
           description: "Заголовок"
@@ -1736,7 +1626,7 @@ components:
           type: string
     Comment:
       type: object
-      description: "Комментарий к посту"
+      description: "Комментарий к оператору"
       allOf:
         - $ref: "#/components/schemas/CommentModel"
         - type: object
@@ -1745,8 +1635,9 @@ components:
               type: number
               description: "Id комментария"
               example: 111
-            post_id:
-              type: string
+            operator_id:
+              type: number
+              example: 1
             time:
               type: number
               example: 1559751301818
@@ -1756,7 +1647,10 @@ components:
             is_blocked:
               type: boolean
               description: "Комментарий заблокирован"
-          
+            is_deleted:
+              type: boolean
+              description: "Комментарий удалён"
+
     NotificationBase:
       type: object
       description: "Оповещения"
@@ -1779,29 +1673,6 @@ components:
         info:
           type: string
           description: "Текст уведомления"
-    Notification:
-      description: "Оповещения"
-      allOf:
-        - $ref: "#/components/schemas/NotificationBase"
-        - type: object
-          properties:
-            person_id:
-              type: number
-              example: 1
-              description: "Кому отправлено"
-            contact:
-              type: string
-              description: "Куда отправлено оповещение (конкретный e-mail или телефон)"
-    NotificationType:
-      type: object
-      properties:
-        id:
-          type: number
-          example: 1
-        code:
-          $ref: "#/components/schemas/NotificationTypeCode"
-        name:
-          type: string
     NotificationTypeCode:
       type: string
       description: "Код типа уведомлений"
@@ -1811,14 +1682,6 @@ components:
         - COMMENT_COMMENT
         - FRIEND_REQUEST
         - MESSAGE
-    Token:
-      type: object
-      description: "Token"
-      properties:
-        token:
-          type: string
-          description: "Token"
-          example: "1q2e3e3r4t5"
     FileType:
       type: string
       description: "Тип файла"
@@ -1837,7 +1700,7 @@ components:
         fileName:
           type: string
           description: "Название файла"
-        relativeFilePath: 
+        relativeFilePath:
           type: string
           description: "Относительный путь до сжатого изображения"
         rawFileURL:
@@ -1854,7 +1717,7 @@ components:
         createdAt:
           type: number
           description: "Время загрузки файла на сервис"
-    PlatfomLanguage: 
+    PlatfomLanguage:
       type: object
       properties:
         id:
